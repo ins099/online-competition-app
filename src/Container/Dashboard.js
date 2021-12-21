@@ -2,29 +2,30 @@ import React from 'react'
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import NavbarComponent from '../Components/NavbarComponent'
 import TaskItem from '../Components/TaskItem'
+import './style.css'
 
 const Dashboard = () => {
 
     const CompetitionList = [
         {
             id:1,
-            title:'Comp 1'
+            title:'Competition 1'
         },
         {
             id:2,
-            title:'Comp 2'
+            title:'Competition 2'
         },
         {
             id:3,
-            title:'Comp 3'
+            title:'Competition 3'
         },
         {
             id:4,
-            title:'Comp 4'
+            title:'Competition 4'
         },
         {
             id:5,
-            title:'Comp 5'
+            title:'Competition 5'
         },
     ]
 
@@ -34,8 +35,8 @@ const Dashboard = () => {
             <NavbarComponent />
             <div>
                 <div>
-                    <div style = {{margin:'auto'}}>
-                        <h3> Today's Pick</h3>
+                    <div style = {{margin:'auto'}} className="center-desktop">
+                        <h3 className="padding-20"> Active Competition/Task</h3>
                         {
                             CompetitionList.map((item)=>(
                                 // <div style = {{margin:'auto'}} key = {item.id}>
@@ -49,5 +50,8 @@ const Dashboard = () => {
         </div>
     )
 }
+
+
+
 
 export default Dashboard

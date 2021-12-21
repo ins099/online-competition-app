@@ -13,12 +13,12 @@
   .submit-form {
     margin:auto;
     width: 50%;
-    background-color: beige;
+    background-color: rgba(200,200,200,0.2);
     padding: 20px;
   }
 
   .article-container {
-    background-color: pink;
+    background-color: rgba(200,200,200,0.2);
     margin: 10% auto;
     padding: 20px;
     border-radius: 10px;
