@@ -17,7 +17,6 @@ export default function Login() {
   const navigate = useNavigate();
   useEffect(()=>{
     if(UserProfileReducer.token){
-      alert("ASD")
       navigate('/dashboard');
     }
   },[UserProfileReducer])

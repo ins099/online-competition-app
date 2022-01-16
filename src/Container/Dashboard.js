@@ -1,5 +1,8 @@
 import React from 'react'
+import { useEffect } from 'react'
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import NavbarComponent from '../Components/NavbarComponent'
 import TaskItem from '../Components/TaskItem'
 import './style.css'
@@ -28,7 +31,22 @@ const Dashboard = () => {
             title:'Competition 5'
         },
     ]
+const {
+    UserProfileReducer,
+    TaskReducer
+} = useSelector(store=>{
+return{
+    UserProfileReducer:store.UserProfileReducer,
+    TaskReducer:store.TaskReducer
+}
+})
 
+const navigate = useNavigate();
+// useEffect(()=>{
+//     if(!UserProfileReducer.token){
+//         navigate("/")
+//     }
+// },[UserProfileReducer])
 
     return (
         <div>
@@ -38,9 +56,9 @@ const Dashboard = () => {
                     <div style = {{margin:'auto'}} className="center-desktop">
                         <h3 className="padding-20"> Active Competition/Task</h3>
                         {
-                            CompetitionList.map((item)=>(
+                            TaskReducer.reverse()?.map((item)=>(
                                 // <div style = {{margin:'auto'}} key = {item.id}>
-                                    <TaskItem title = {item.title} />
+                                    <TaskItem title = {item.name}description={item.description} id={item._id}/>
                                 // {/* </div> */}
                             ))
                         }

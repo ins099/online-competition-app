@@ -1,7 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const NavbarComponent = () => {
+
+
+    const {
+        UserProfileReducer,
+        TaskReducer
+    } = useSelector(store=>{
+    return{
+        UserProfileReducer:store.UserProfileReducer,
+        TaskReducer:store.TaskReducer
+    }
+    })
+    
+    const navigate = useNavigate();
+    useEffect(()=>{
+        if(!UserProfileReducer.token){
+            navigate("/")
+        }
+    },[UserProfileReducer])
     return (
         <Navbar bg="dark" variant="dark" expand = 'lg' >
         <Container>
