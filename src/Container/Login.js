@@ -1,18 +1,35 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { ActionWithPayload } from "../Redux/actions";
+import { SIGN_IN } from "../Redux/actionTypes";
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
+  const [state,setState] = useState({username:"",password:""})
+  const {UserProfileReducer} = useSelector(store=>{
+    return{
+      UserProfileReducer:store.UserProfileReducer
+    }
+  })
+  const navigate = useNavigate();
+  useEffect(()=>{
+    if(UserProfileReducer.token){
+      alert("ASD")
+      navigate('/dashboard');
+    }
+  },[UserProfileReducer])
   function validateForm() {
-    return username.length > 0 && password.length > 0;
+    return state.username.length > 0 && state.password.length > 0;
   }
 
+  const handleChange = (key, value) => setState({ ...state, [key]: value })
+const dispatch = useDispatch()
   function handleSubmit(event) {
-    event.preventDefault();
+dispatch(ActionWithPayload(SIGN_IN,state))
+    // event.preventDefault();
   }
 
   return (
@@ -29,27 +46,27 @@ export default function Login() {
           <Form.Control
             autoFocus
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={state.username}
+            onChange={(e) => handleChange("username", e.target.value)}
           />
         </Form.Group>
         <Form.Group size="lg" controlId="password">
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={state.password}
+            onChange={(e) => handleChange("password", e.target.value)}
           />
         </Form.Group>
         <div
           className="d-grid gap-2"
           style={{ textAlign: "center", padding: 5 }}
         >
-          <Link to="/dashboard">
-            <Button variant="primary" type="submit" disabled={!validateForm()}>
+          {/* <Link to="/dashboard"> */}
+            <Button variant="primary" onClick={handleSubmit}  disabled={!validateForm()}>
               Submit
             </Button>
-          </Link>
+          {/* </Link> */}
         </div>
       </Form>
     </div>

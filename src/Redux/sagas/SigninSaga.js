@@ -1,8 +1,11 @@
 
 import { put, call, all, select } from 'redux-saga/effects';
 import { API_ENDPOINTS } from '../../constant/network';
+import { push } from 'react-router-redux'
+
 import { RestClient } from '../../network/RestClient';
 import {
+    FETCH_TASK,
   SIGN_IN_FAILURE,
   SIGN_IN_SUCCESS,
 } from '../actionTypes';
@@ -13,8 +16,6 @@ export function* signinSaga({ payload }) {
     const {
       username = '',
       password = '',
-      navigation,
-      savedCredentials = false,
     } = payload;
     const response = yield call(() =>
       RestClient.post(API_ENDPOINTS.signin, {
@@ -22,10 +23,6 @@ export function* signinSaga({ payload }) {
         password,
       })
     );
-    if (savedCredentials) {
-   
-    } else {
-    }
     if (response.problem === 'NETWORK_ERROR') {
     //   Alert.alert('Network Error');
     }
@@ -33,17 +30,17 @@ export function* signinSaga({ payload }) {
       data: { data: res, message },
     } = response;
     console.log('user', response);
-    if (response.data.response) {
+    if (response.data.message!=="Invalid Username or Password") {
 
       RestClient.setHeader(
         'Authorization',
         `Bearer ${response?.data?.data?.token}`
       );
+      push('/dashboard')
 
       yield put({ type: SIGN_IN_SUCCESS, payload: response.data.data });
-      navigation.replace('BottomTab', { screen: 'waiting' });
+      yield put({ type: FETCH_TASK, payload: null });
     } else {
-    //   Alert.alert(message?.toString());
       yield put({ type: SIGN_IN_FAILURE, payload: response });
     }
   } catch (error) {
