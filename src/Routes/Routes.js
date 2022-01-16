@@ -9,13 +9,11 @@ import Register from '../Container/Register';
 const AppRoutes = () => {
     return (
     <Routes>
-<Switch>
-        {/* <Route exact path="/" element={<Login />} /> */}
-        <Route path="/register" element={<Register />} />
+        <Route exact path="/" element={<Login />} />
+        <Route path="register" element={<Register />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="article" element={<Article />} />
         <Route path="form" element={<SubmitForm />} />
-</Switch>
     
     </Routes>
     )
