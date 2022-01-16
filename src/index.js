@@ -6,11 +6,12 @@ import reportWebVitals from './reportWebVitals';
 import { HashRouter as BrowserRouter  } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ReduxProvider from './ReduxProvider';
 
 ReactDOM.render(
   <BrowserRouter>
     <React.StrictMode>
-      <App />
+      <ReduxProvider />
     </React.StrictMode>
   </BrowserRouter>,
   document.getElementById('root')
