@@ -10,6 +10,7 @@ import {
   SIGN_IN_SUCCESS,
 } from '../actionTypes';
 import { ActionWithoutPayload } from '../actions';
+import { toast } from 'react-toastify';
 
 export function* signinSaga({ payload }) {
   try {
@@ -37,11 +38,13 @@ export function* signinSaga({ payload }) {
         `Bearer ${response?.data?.data?.token}`
       );
       push('/dashboard')
-
+toast.success("Logged In Success")
       yield put({ type: SIGN_IN_SUCCESS, payload: response.data.data });
       yield put({ type: FETCH_TASK, payload: null });
     } else {
       yield put({ type: SIGN_IN_FAILURE, payload: response });
+toast.error("Logged In Failure")
+
     }
   } catch (error) {
     yield put({ type: SIGN_IN_FAILURE, error });
