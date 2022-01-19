@@ -10,10 +10,12 @@ import {
 import { fetchTaskSaga } from './FetchtaskSaga';
 
 import { signinSaga } from './SigninSaga';
+import { signupSaga } from './SignupSaga';
 import { submitEntrySaga } from './SubmitEntrySaga';
 
 function* actionWatcher() {
   yield takeLatest(SIGN_IN, signinSaga);
+  yield takeLatest(SIGN_UP, signupSaga);
   yield takeLatest(FETCH_TASK, fetchTaskSaga);
   yield takeLatest(SUBMIT_ENTRY, submitEntrySaga);
 }
