@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { ActionWithPayload } from "../Redux/actions";
+import { SIGN_UP } from "../Redux/actionTypes";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
-
+const navigate = useNavigate()
     const [state, setState] = useState({
         username: "",
         password: "",
@@ -13,24 +17,39 @@ export default function Register() {
         last_name: "",
         email: "",
         phone_number: "",
+        navigate:navigate
     })
     const handleChange = (key, value) => setState({ ...state, [key]: value })
     function validateForm() {
         // return state.username.length > 0 && password.length > 0;
         return true
     }
-
-    function handleSubmit(event) {
-        event.preventDefault();
+const dispatch = useDispatch()
+const onSubmit = ()=>{
+    let flag = false
+    Object.keys(state).map(e=>{
+        if(!state[e] && !flag){
+            alert(`${e} is required`)
+            flag = true
+            return false
+        }
+    })
+    if(state.password!==state.confirm_password){
+        flag = true
+        alert("Password doesnt match")
     }
+    if(!flag){
+        dispatch(ActionWithPayload(SIGN_UP,state))
+    }
+
+}
 
     return (
         <div className="Login">
-            <h3 style={{ textAlign: "center" }}>Welcome!</h3>
-            <Form onSubmit={handleSubmit}>
+            <h3 style={{ textAlign: "center" }}>Create an Account</h3>
+            <Form>
                 <Form.Group
                     className="mb-3"
-                    controlId="formBasicEmail"
                     size="lg"
                 >
                     <Form.Label>First Name</Form.Label>
@@ -43,7 +62,6 @@ export default function Register() {
                 </Form.Group>
                 <Form.Group
                     className="mb-3"
-                    controlId="formBasicEmail"
                     size="lg"
                 >
                     <Form.Label>Last Name</Form.Label>
@@ -59,7 +77,6 @@ export default function Register() {
 
                 <Form.Group
                     className="mb-3"
-                    controlId="formBasicEmail"
                     size="lg"
                 >
                     <Form.Label>Email</Form.Label>
@@ -72,7 +89,6 @@ export default function Register() {
                 </Form.Group>
                 <Form.Group
                     className="mb-3"
-                    controlId="formBasicEmail"
                     size="lg"
                 >
                     <Form.Label>Phone Number</Form.Label>
@@ -88,9 +104,7 @@ export default function Register() {
 
                 <Form.Group
                     className="mb-3"
-                    controlId="formBasicEmail"
                     size="lg"
-                    controlId="email"
                 >
                     <Form.Label>Username</Form.Label>
                     <Form.Control
@@ -100,7 +114,7 @@ export default function Register() {
                         onChange={(e) => handleChange("username", e.target.value)}
                     />
                 </Form.Group>
-                <Form.Group size="lg" controlId="password">
+                <Form.Group size="lg">
                     <Form.Label>Password</Form.Label>
                     <Form.Control
                         type="password"
@@ -109,7 +123,7 @@ export default function Register() {
 
                     />
                 </Form.Group>
-                <Form.Group size="lg" controlId="password">
+                <Form.Group size="lg" >
                     <Form.Label>Confirm Password</Form.Label>
                     <Form.Control
                         type="password"
@@ -122,13 +136,25 @@ export default function Register() {
                     className="d-grid gap-2"
                     style={{ textAlign: "center", padding: 5 }}
                 >
-                    <Link to="/dashboard">
-                        <Button variant="primary" type="submit" disabled={!validateForm()}>
+                        <Button variant="primary" onClick={onSubmit}>
                             Submit
                         </Button>
-                    </Link>
                 </div>
             </Form>
+            <Link
+        to={"/"}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignSelf: "center",
+          width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <h3 style={{fontSize:16}}>Already have an account?</h3>
+        <h3 style={{fontSize:16}}>Login</h3>
+      </Link>
         </div>
     );
 }

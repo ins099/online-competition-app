@@ -6,6 +6,7 @@ import Dashboard from '../Container/Dashboard';
 import Login from '../Container/Login';
 import Register from '../Container/Register';
 
+
 const AppRoutes = () => {
     return (
     <Routes>
@@ -19,4 +20,4 @@ const AppRoutes = () => {
     )
 }
 
-export default AppRoutes
+export default AppRoutes;
