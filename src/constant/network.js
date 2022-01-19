@@ -7,5 +7,6 @@ export const API_ENDPOINTS = {
   task:'competitions',
   video_premium:'video/premium',
   contact:'contact',
-  payment:'payment'
+  payment:'payment',
+  entry:'entry'
 }
